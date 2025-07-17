@@ -11,7 +11,11 @@ const NavLinks = () => {
     <ul className="flex justify-end items-center w-full">
       {NAV_LINKS.map(({ href, label }) => (
         <li key={href} className="mx-4">
-          <Link href={href} className="text-center font-nato text-gray-900 text-base font-normal">
+          <Link
+            href={href}
+            className="text-center font-nato text-gray-900 text-base font-normal"
+            data-testid="nav-link"
+          >
             {label}
           </Link>
         </li>

@@ -24,7 +24,7 @@ const UserMobileMenu = () => {
       <ul className="flex justify-center gap-4">
         {NAV_LINKS.map(({ href, label, icon }) => (
           <li key={href} className="w-10 h-10 flex items-center justify-center">
-            <Link href={href}>
+            <Link href={href} data-testid="mobile-auth-link">
               <div className="flex flex-col items-center justify-center leading-[12px]">
                 {icon}
                 <span className="text-[10px] text-gray-600 mt-1">{label}</span>
@@ -49,6 +49,7 @@ const UserMobileMenu = () => {
                 <Link
                   href={href}
                   className="font-nato text-gray-900 text-base font-normal py-1 px-5 hover:bg-gray-300 rounded-lg"
+                  data-testid="mobile-nav-link"
                 >
                   {label}
                 </Link>
