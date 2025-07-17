@@ -7,6 +7,9 @@ settings:
 importers:
   .:
     dependencies:
+      "@hookform/resolvers":
+        specifier: ^5.1.1
+        version: 5.1.1(react-hook-form@7.60.0(react@19.1.0))
       next:
         specifier: 15.4.1
         version: 15.4.1(@babel/core@7.28.0)(@playwright/test@1.54.1)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
@@ -16,6 +19,12 @@ importers:
       react-dom:
         specifier: 19.1.0
         version: 19.1.0(react@19.1.0)
+      react-hook-form:
+        specifier: ^7.60.0
+        version: 7.60.0(react@19.1.0)
+      zod:
+        specifier: ^4.0.5
+        version: 4.0.5
     devDependencies:
       "@eslint/eslintrc":
         specifier: ^3
@@ -395,6 +404,12 @@ packages:
     resolution:
       { integrity: sha512-1+WqvgNMhmlAambTvT3KPtCl/Ibr68VldY2XY40SL1CE0ZXiakFR/cbTspaF5HsnpDMvcYYoJHfl4980NBjGag== }
     engines: { node: ^18.18.0 || ^20.9.0 || >=21.1.0 }
+
+  "@hookform/resolvers@5.1.1":
+    resolution:
+      { integrity: sha512-J/NVING3LMAEvexJkyTLjruSm7aOFx7QX21pzkiJfMoNG0wl5aFEjLTl7ay7IQb9EWY6AkrBy7tHL2Alijpdcg== }
+    peerDependencies:
+      react-hook-form: ^7.55.0
 
   "@humanfs/core@0.19.1":
     resolution:
@@ -840,6 +855,10 @@ packages:
   "@sinonjs/fake-timers@13.0.5":
     resolution:
       { integrity: sha512-36/hTbH2uaWuGVERyC6da9YwGWnzUZXuPro/F2LfsdOsLnCojz/iSH8MxUt/FD2S5XBSVPhmArFUXcpCQ2Hkiw== }
+
+  "@standard-schema/utils@0.3.0":
+    resolution:
+      { integrity: sha512-e7Mew686owMaPJVNNLs55PUvgz371nKgwsc4vxE49zsODpJEnxgxRo2y/OKrqueavXgZNMDVj3DdHFlaSAeU8g== }
 
   "@swc/helpers@0.5.15":
     resolution:
@@ -3220,6 +3239,13 @@ packages:
     peerDependencies:
       react: ^19.1.0
 
+  react-hook-form@7.60.0:
+    resolution:
+      { integrity: sha512-SBrYOvMbDB7cV8ZfNpaiLcgjH/a1c7aK0lK+aNigpf4xWLO8q+o4tcvVurv3c4EOyzn/3dCsYt4GKD42VvJ/+A== }
+    engines: { node: ">=18.0.0" }
+    peerDependencies:
+      react: ^16.8.0 || ^17 || ^18 || ^19
+
   react-is@16.13.1:
     resolution:
       { integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ== }
@@ -3880,6 +3906,10 @@ packages:
       { integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q== }
     engines: { node: ">=10" }
 
+  zod@4.0.5:
+    resolution:
+      { integrity: sha512-/5UuuRPStvHXu7RS+gmvRf4NXrNxpSllGwDnCBcJZtQsKrviYXm54yDGV2KYNLT5kq0lHGcl7lqWJLgSaG+tgA== }
+
 snapshots:
   "@adobe/css-tools@4.4.3": {}
 
@@ -4172,6 +4202,11 @@ snapshots:
     dependencies:
       "@eslint/core": 0.15.1
       levn: 0.4.1
+
+  "@hookform/resolvers@5.1.1(react-hook-form@7.60.0(react@19.1.0))":
+    dependencies:
+      "@standard-schema/utils": 0.3.0
+      react-hook-form: 7.60.0(react@19.1.0)
 
   "@humanfs/core@0.19.1": {}
 
@@ -4577,6 +4612,8 @@ snapshots:
   "@sinonjs/fake-timers@13.0.5":
     dependencies:
       "@sinonjs/commons": 3.0.1
+
+  "@standard-schema/utils@0.3.0": {}
 
   "@swc/helpers@0.5.15":
     dependencies:
@@ -6852,6 +6889,10 @@ snapshots:
       react: 19.1.0
       scheduler: 0.26.0
 
+  react-hook-form@7.60.0(react@19.1.0):
+    dependencies:
+      react: 19.1.0
+
   react-is@16.13.1: {}
 
   react-is@17.0.2: {}
@@ -7482,3 +7523,5 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@4.0.5: {}
