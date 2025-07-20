@@ -163,7 +163,7 @@ export const SignUpForm = () => {
           <Button
             type="submit"
             disabled={submitting}
-            className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm cursor-pointer"
+            className="flex w-full justify-center rounded-md bg-primary-600 px-3 py-2 text-sm font-semibold leading-6 text-white shadow-sm cursor-pointer hover:bg-primary-600"
           >
             {submitting ? "登録中..." : "会員登録する（無料）"}
           </Button>
