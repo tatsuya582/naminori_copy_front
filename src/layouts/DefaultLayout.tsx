@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/header/Header";
-// import Footer from "@/components/Footer";
 
 const DefaultLayout = ({ children }: { children: React.ReactNode }) => {
   return (
