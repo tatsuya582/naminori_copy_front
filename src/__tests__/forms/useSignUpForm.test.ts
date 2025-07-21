@@ -1,6 +1,7 @@
 import { renderHook, act } from "@testing-library/react";
 import { useSignUpForm } from "@/components/forms/useSignUpForm";
 import * as nextRouter from "next/router";
+import { type SignUpFormData } from "@/schema/signUp";
 
 // グローバル fetch を jest モックに
 global.fetch = jest.fn();
@@ -77,7 +78,7 @@ describe("useSignUpForm", () => {
     const { result } = renderHook(() => useSignUpForm(setSubmitting));
 
     await act(async () => {
-      await result.current.onSubmit(mockFormData as any);
+      await result.current.onSubmit(mockFormData as SignUpFormData);
     });
 
     expect(setSubmitting).toHaveBeenCalledWith(true);
@@ -95,7 +96,7 @@ describe("useSignUpForm", () => {
     const { result } = renderHook(() => useSignUpForm(setSubmitting));
 
     await act(async () => {
-      await result.current.onSubmit({ ...mockFormData, email: "duplicate@example.com" } as any);
+      await result.current.onSubmit({ ...mockFormData, email: "duplicate@example.com" } as SignUpFormData);
     });
 
     expect(fetch).toHaveBeenCalled();
@@ -110,7 +111,7 @@ describe("useSignUpForm", () => {
     const { result } = renderHook(() => useSignUpForm(setSubmitting));
 
     await act(async () => {
-      await result.current.onSubmit(mockFormData as any);
+      await result.current.onSubmit(mockFormData as SignUpFormData);
     });
 
     expect(setSubmitting).toHaveBeenCalledWith(true);
