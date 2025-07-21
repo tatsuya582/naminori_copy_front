@@ -1,9 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dispatch, SetStateAction } from "react";
+import { useRouter } from "next/router";
+import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) => {
+  const router = useRouter();
   const prefectures = [
     "北海道",
     "青森県",
@@ -108,6 +111,7 @@ export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
   const onSubmit = async (data: SignUpFormData) => {
     setSubmitting(true);
     try {
+      // agreement,birth_year,month,dayは送信しない
       const user: Omit<SignUpFormData, "agreement"> & {
         agreement?: boolean;
       } = {
@@ -118,8 +122,7 @@ export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
       delete user.birth_month;
       delete user.birth_day;
       delete user.agreement;
-      console.log("Submitting user data:", user);
-      const res = await fetch("http://localhost:3003/signup", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -128,14 +131,24 @@ export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
       });
 
       if (!res.ok) {
-        const err = await res.json();
-        alert("登録に失敗しました：" + JSON.stringify(err));
+        const errData = await res.json();
+
+        // エラーが「Email has already been taken」のときだけ詳細表示
+        if (Array.isArray(errData.errors) && errData.errors.includes("Email has already been taken")) {
+          toast.error("登録に失敗しました", {
+            description: "このメールアドレスはすでに登録されています",
+          });
+        } else {
+          toast.error("登録に失敗しました");
+        }
         return;
       }
-
-      alert("登録に成功しました！");
+      toast.success("登録に成功しました");
+      router.push("/jobs");
     } catch (e) {
-      alert("通信エラーが発生しました");
+      toast.error("通信エラーが発生しました", {
+        description: "時間をおいて再度お試しください。",
+      });
     } finally {
       setSubmitting(false);
     }
