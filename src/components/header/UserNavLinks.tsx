@@ -16,9 +16,6 @@ const LOGIN_NAV_LINKS = [
 const UserNavLinks = () => {
   const { user, loading } = useUser();
   const { logout } = useLogout();
-  const handleLogout = async () => {
-    await logout();
-  };
 
   if (loading) return null;
   return (

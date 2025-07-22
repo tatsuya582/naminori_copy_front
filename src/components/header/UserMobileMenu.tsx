@@ -6,7 +6,6 @@ import HamburgerIcon from "../icons/HamburgerIcon";
 import { useUser } from "@/hooks/useUser";
 import { UserMenu } from "./UserMenu";
 import { useLogout } from "@/lib/auth/logout";
-import { log } from "console";
 
 const NAV_LINKS = [
   { href: "/user/sign_up", label: "会員登録", icon: <SignUpIcon /> },
