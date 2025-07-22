@@ -1,5 +1,5 @@
 import { useUser } from "@/hooks/useUser";
-import { logout } from "@/lib/logout";
+import { useLogout } from "@/lib/auth/logout";
 import Link from "next/link";
 import { UserMenu } from "./UserMenu";
 
@@ -15,6 +15,7 @@ const LOGIN_NAV_LINKS = [
 
 const UserNavLinks = () => {
   const { user, loading } = useUser();
+  const { logout } = useLogout();
   const handleLogout = async () => {
     await logout();
   };
@@ -43,7 +44,7 @@ const UserNavLinks = () => {
         <>
           <li>
             <button
-              onClick={handleLogout}
+              onClick={logout}
               className="font-nato text-gray-900 text-base font-normal cursor-pointer"
               data-testid="logout-button"
             >
