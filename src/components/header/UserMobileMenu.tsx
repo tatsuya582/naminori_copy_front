@@ -50,7 +50,7 @@ const UserMobileMenu = () => {
             </li>
           ))}
         <li className="w-10 h-10 flex items-center justify-center">
-          <button onClick={() => setOpen(!open)}>
+          <button onClick={() => setOpen(!open)} data-testid="mobile-menu-button">
             <div className="flex flex-col items-center justify-center leading-[12px]">
               <HamburgerIcon />
               <span className="text-[10px] text-gray-600 mt-1">メニュー</span>

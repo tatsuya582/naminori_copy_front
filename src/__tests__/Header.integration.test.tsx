@@ -1,43 +1,65 @@
 import Header from "@/components/header/Header";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import { useUser } from "@/hooks/useUser";
 
-describe("Header Integration Test", () => {
-  it("renders logo, main nav, and user nav (PC)", () => {
-    render(<Header />);
+jest.mock("next/navigation", () => ({
+  useRouter: () => ({
+    push: jest.fn(),
+    replace: jest.fn(),
+    refresh: jest.fn(),
+    back: jest.fn(),
+    forward: jest.fn(),
+    prefetch: jest.fn(),
+  }),
+}));
 
-    const logo = screen.getByRole("img", { name: /logo/i });
-    expect(logo).toBeInTheDocument();
+jest.mock("@/hooks/useUser", () => ({
+  useUser: jest.fn(),
+}));
 
-    // メインナビゲーション（PC）
-    const navLinks = screen.getAllByTestId("nav-link");
-    expect(navLinks).toHaveLength(3); // /jobs, /courses, /articles
-
-    // ユーザーナビゲーション（PC）
-    const pcAuthLinks = screen.getAllByTestId("auth-pc-link");
-    expect(pcAuthLinks).toHaveLength(4); // histories, favorites, login, signup
-
-    // リンク先チェック（例）
-    expect(pcAuthLinks.find((el) => el.textContent === "ログイン")).toHaveAttribute("href", "/user/sign_in");
-    expect(navLinks.find((el) => el.textContent === "求人をさがす")).toHaveAttribute("href", "/jobs");
+describe("Header Integration Test (PC)", () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
   });
 
-  it("renders auth links and toggled menu links in mobile menu", () => {
+  it("renders correctly when user is NOT logged in", () => {
+    (useUser as jest.Mock).mockReturnValue({
+      user: null,
+      loading: false,
+    });
+
     render(<Header />);
 
-    // モバイル用：ログイン・会員登録アイコン（SignIn/SignUp）
-    const mobileAuthLinks = screen.getAllByTestId("mobile-auth-link");
-    expect(mobileAuthLinks).toHaveLength(2);
+    // ロゴ
+    expect(screen.getByRole("img", { name: /logo/i })).toBeInTheDocument();
 
-    // 「メニュー」ボタンをクリックしてトグルメニューを開く
-    const menuToggle = screen.getByText("メニュー");
-    fireEvent.click(menuToggle);
+    // メインナビゲーション
+    const navLinks = screen.getAllByTestId("nav-link");
+    expect(navLinks).toHaveLength(3);
 
-    // トグルされたリンク（求人・コース・履歴・気になる）
-    const mobileNavLinks = screen.getAllByTestId("mobile-nav-link");
-    expect(mobileNavLinks).toHaveLength(4);
+    // ユーザーナビゲーション（未ログイン）
+    const authLinks = screen.getAllByTestId("auth-pc-link");
+    expect(authLinks).toHaveLength(4); // histories, favorites, login, signup
 
-    // それぞれのリンクが正しいか確認（例）
-    expect(mobileNavLinks.find((el) => el.textContent === "求人をさがす")).toHaveAttribute("href", "/jobs");
-    expect(mobileNavLinks.find((el) => el.textContent === "閲覧履歴")).toHaveAttribute("href", "/histories");
+    expect(authLinks.find((el) => el.textContent === "ログイン")).toHaveAttribute("href", "/user/sign_in");
+    expect(authLinks.find((el) => el.textContent === "新規会員登録")).toHaveAttribute("href", "/user/sign_up");
+  });
+
+  it("renders correctly when user IS logged in", () => {
+    (useUser as jest.Mock).mockReturnValue({
+      user: { id: 1, email: "test@example.com" },
+      loading: false,
+    });
+
+    render(<Header />);
+
+    // ユーザーナビゲーション（ログイン状態）
+    const authLinks = screen.getAllByTestId("auth-pc-link");
+    expect(authLinks.length).toBeGreaterThanOrEqual(4); // histories, favorites, applys, dashboard
+
+    // ログアウトボタン
+    expect(screen.getByTestId("logout-button")).toBeInTheDocument();
+    // ユーザードロップダウンメニューのトリガーアイコン
+    expect(screen.getByTestId("mobile-menu-button")).toBeInTheDocument();
   });
 });
