@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { SignInFormData, signInSchema } from "@/schema/signIn";
+import { mutate } from "swr";
 
 export const useSignInForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) => {
   const router = useRouter();
@@ -28,6 +29,7 @@ export const useSignInForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
       delete user.rememberMe;
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/login`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -38,6 +40,7 @@ export const useSignInForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
         toast.error("ログインに失敗しました。ユーザー名とパスワードを確認してください。");
         return;
       }
+      await mutate(`${process.env.NEXT_PUBLIC_API_BASE_URL}/me`);
       toast.success("ログインしました。");
       router.push("/user/dashboard");
     } catch {

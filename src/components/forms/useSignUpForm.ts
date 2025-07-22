@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { toast } from "sonner";
 import { useForm } from "react-hook-form";
 import { prefectures, SignUpFormData, signUpSchema } from "@/schema/signUp";
+import { mutate } from "swr";
 
 export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) => {
   const router = useRouter();
@@ -45,6 +46,7 @@ export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
       delete user.agreement;
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/signup`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,6 +66,7 @@ export const useSignUpForm = (setSubmitting: Dispatch<SetStateAction<boolean>>) 
         }
         return;
       }
+      await mutate(`${process.env.NEXT_PUBLIC_API_BASE_URL}/me`);
       toast.success("登録に成功しました");
       router.push("/jobs");
     } catch {
