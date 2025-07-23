@@ -2,6 +2,8 @@ import { GetServerSideProps } from "next";
 import nookies from "nookies";
 
 export const requireAuth: GetServerSideProps = async (ctx) => {
+  ctx.res.setHeader("Cache-Control", "no-store");
+
   const cookies = nookies.get(ctx);
   const token = cookies.jwt;
 
