@@ -1,7 +1,11 @@
+import { AuthGuard } from "@/components/auth/AuthGuard";
+
 export default function NotificationsPage() {
   return (
-    <div>
-      <h1>通知設定</h1>
-    </div>
+    <AuthGuard>
+      <div>
+        <h1>通知設定</h1>
+      </div>
+    </AuthGuard>
   );
 }
